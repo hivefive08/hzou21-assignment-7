@@ -237,11 +237,12 @@ def confidence_interval():
     Y = np.array(session.get("Y"))
     slope = float(session.get("slope"))
     intercept = float(session.get("intercept"))
-    slopes = session.get("slopes")
-    intercepts = session.get("intercepts")
-
+    slopes = [float(s) for s in session.get("slopes")]
+    intercepts = [float(i) for i in session.get("intercepts")]
     parameter = request.form.get("parameter")
     confidence_level = float(request.form.get("confidence_level"))
+    if confidence_level > 1:
+        confidence_level /= 100.0
 
     # Use the slopes or intercepts from the simulations
     if parameter == "slope":
